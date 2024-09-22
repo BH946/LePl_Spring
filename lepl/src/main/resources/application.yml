@@ -7,8 +7,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create # table 자동 생성
-#      ddl-auto: none # db 초기화 없앰
+#      ddl-auto: create # table 자동 생성
+      ddl-auto: none # db 초기화 없앰
     properties:
       hibernate:
 #        show_sql: true

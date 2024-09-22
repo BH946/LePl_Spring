@@ -9,7 +9,9 @@ import com.lepl.domain.character.Exp;
 import com.lepl.domain.member.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
@@ -20,17 +22,19 @@ import java.util.List;
 
 import static com.lepl.util.Messages.SESSION_NAME_LOGIN;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @SpringBootTest 의 경우 모든 빈을 로드..
- * 컨트롤러만 테스트?? @WebMvcTest 사용
+ * 컨트롤러만 테스트?? @WebMvcTest 사용 권장
  */
 @WebMvcTest(controllers = MemberApiController.class)
 class MemberApiControllerTest {
@@ -50,9 +54,14 @@ class MemberApiControllerTest {
     @Test
     public void 회원가입() throws Exception {
         // given
-        String content = "{\"uid\":\"12345\", \"nickname\":\"회원가입 테스트\"}";
-        Member member = Member.createMember("12345", "회원가입 테스트");
-        member.setId(1L);
+        String content = "{\"uid\":\"12345\", \"nickname\":\"회원가입 테스트\"}"; //입력 json 흉내
+//        Member member = Member.createMember("12345", "회원가입 테스트");
+//        member.setId(1L);
+        // Mocking Member 객체
+        Member member = mock(Member.class);
+        when(member.getId()).thenReturn(1L); // ID 반환 설정
+        when(member.getUid()).thenReturn("12345");
+        when(member.getNickname()).thenReturn("회원가입 테스트");
 
         // when
         when(memberService.join(any())).thenReturn(member);
@@ -77,8 +86,13 @@ class MemberApiControllerTest {
     public void 로그인() throws Exception {
         // given
         String content = "{\"uid\":\"123\"}"; // {"name":"value"} 형태로 작성해야 JSON 형태!
-        Member member = Member.createMember("123", "test");
-        member.setId(1L);
+//        Member member = Member.createMember("123", "test");
+//        member.setId(1L);
+        // Mocking Member 객체
+        Member member = mock(Member.class);
+        when(member.getId()).thenReturn(1L); // ID 반환 설정
+        when(member.getUid()).thenReturn("123");
+        when(member.getNickname()).thenReturn("로그인 테스트");
 
         // when
         when(memberService.findByUid(any())).thenReturn(member);
@@ -99,8 +113,13 @@ class MemberApiControllerTest {
     @Test
     public void 로그아웃_성공과중복() throws Exception {
         // given
-        Member member = Member.createMember("123", "test");
-        member.setId(1L);
+//        Member member = Member.createMember("123", "test");
+//        member.setId(1L);
+        // Mocking Member 객체
+        Member member = mock(Member.class);
+        when(member.getId()).thenReturn(1L); // ID 반환 설정
+        when(member.getUid()).thenReturn("123");
+        when(member.getNickname()).thenReturn("로그아웃 테스트");
         MockHttpSession session = new MockHttpSession();
         session.setAttribute(SESSION_NAME_LOGIN, member.getId());
 

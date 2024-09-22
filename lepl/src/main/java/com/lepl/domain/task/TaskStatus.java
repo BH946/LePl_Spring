@@ -1,7 +1,11 @@
 package com.lepl.domain.task;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,26 +15,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "TASK_STATUS")
 public class TaskStatus {
-    @Id
-    @GeneratedValue
-    @Column(name = "task_status_id")
-    private Long id;
 
-    private Boolean completedStatus; // 일정 완료 유무
-    private Boolean timerOnOff; // 타이머 사용 유무
+  @Id
+  @GeneratedValue
+  @Column(name = "task_status_id")
+  private Long id;
 
-    //==생성 편의 메서드==//
-    public static TaskStatus createTaskStatus(Boolean completedStatus, Boolean timerOnOff) {
-        TaskStatus taskStatus = new TaskStatus();
-        taskStatus.completedStatus = completedStatus;
-        taskStatus.timerOnOff = timerOnOff;
-        return taskStatus;
-    }
+  private Boolean completedStatus; // 일정 완료 유무
+  private Boolean timerOnOff; // 타이머 사용 유무
 
-    //==비지니스 편의 메서드==//
-    public TaskStatus update(Boolean completedStatus, Boolean timerOnOff) {
-        this.completedStatus = completedStatus;
-        this.timerOnOff = timerOnOff;
-        return this;
-    }
+  //==생성 편의 메서드==//
+  public static TaskStatus createTaskStatus(Boolean completedStatus, Boolean timerOnOff) {
+    TaskStatus taskStatus = new TaskStatus();
+    taskStatus.completedStatus = completedStatus;
+    taskStatus.timerOnOff = timerOnOff;
+    return taskStatus;
+  }
+
+  //==비지니스 편의 메서드==//
+  public TaskStatus update(Boolean completedStatus, Boolean timerOnOff) {
+    this.completedStatus = completedStatus;
+    this.timerOnOff = timerOnOff;
+    return this;
+  }
 }

@@ -12,35 +12,37 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true) // 읽기모드
 @RequiredArgsConstructor
 public class CharacterService {
-    private final CharacterRepository characterRepository;
-    private final MemberRepository memberRepository;
 
-    /**
-     * join, findOne, findCharacterWithMember, remove
-     */
-    @Transactional // 쓰기모드
-    public Character join(Character character) {
-        characterRepository.save(character);
-        return character;
-    }
+  private final CharacterRepository characterRepository;
+  private final MemberRepository memberRepository;
 
-    public Character findOne(Long characterId) {
-        return characterRepository.findOne(characterId);
-    }
+  /**
+   * join, findOne, findCharacterWithMember, remove
+   */
+  @Transactional // 쓰기모드
+  public Character join(Character character) {
+    characterRepository.save(character);
+    return character;
+  }
 
-    //캐릭터 화폐 업데이트
-    @Transactional
-    public void updateCoin(Long money, Long characterId) {
-        characterRepository.updateCoin(money, characterId);
-    }
+  public Character findOne(Long characterId) {
+    return characterRepository.findOne(characterId);
+  }
 
-    @Cacheable(value = "users", key = "#memberId", cacheNames = "users", cacheManager = "cacheManager2") // [캐시 없으면 저장] 조회
-    public Character findCharacterWithMember(Long memberId) {
-        return characterRepository.findCharacterWithMember(memberId);
-    }
+  //캐릭터 화폐 업데이트
+  @Transactional
+  public void updateCoin(Long money, Long characterId) {
+    characterRepository.updateCoin(money, characterId);
+  }
 
-    @Transactional // 쓰기모드
-    public void remove(Character character) {
-        characterRepository.remove(character);
-    }
+  @Cacheable(value = "users", key = "#memberId", cacheNames = "users", cacheManager = "cacheManager2")
+  // [캐시 없으면 저장] 조회
+  public Character findCharacterWithMember(Long memberId) {
+    return characterRepository.findCharacterWithMember(memberId);
+  }
+
+  @Transactional // 쓰기모드
+  public void remove(Character character) {
+    characterRepository.remove(character);
+  }
 }

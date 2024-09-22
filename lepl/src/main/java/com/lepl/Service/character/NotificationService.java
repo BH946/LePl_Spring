@@ -2,41 +2,41 @@ package com.lepl.Service.character;
 
 import com.lepl.Repository.character.NotificationRepository;
 import com.lepl.domain.character.Notification;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true) // 읽기모드
 @RequiredArgsConstructor
 public class NotificationService {
-    private final NotificationRepository notificationRepository;
 
-    /**
-     * join, findOne, findAll, remove, findAllWithCharacter
-     */
-    @Transactional // 쓰기모드
-    public Long join(Notification notification) {
-        notificationRepository.save(notification);
-        return notification.getId();
-    }
+  private final NotificationRepository notificationRepository;
 
-    public Notification findOne(Long notificationId) {
-        return notificationRepository.findOne(notificationId);
-    }
+  /**
+   * join, findOne, findAll, remove, findAllWithCharacter
+   */
+  @Transactional // 쓰기모드
+  public Long join(Notification notification) {
+    notificationRepository.save(notification);
+    return notification.getId();
+  }
 
-    public List<Notification> findAll() {
-        return notificationRepository.findAll();
-    }
+  public Notification findOne(Long notificationId) {
+    return notificationRepository.findOne(notificationId);
+  }
 
-    @Transactional
-    public void remove(Notification notification) {
-        notificationRepository.remove(notification);
-    }
+  public List<Notification> findAll() {
+    return notificationRepository.findAll();
+  }
 
-    public List<Notification> findAllWithCharacter(Long characterId) {
-        return notificationRepository.findAllWithCharacter(characterId);
-    }
+  @Transactional
+  public void remove(Notification notification) {
+    notificationRepository.remove(notification);
+  }
+
+  public List<Notification> findAllWithCharacter(Long characterId) {
+    return notificationRepository.findAllWithCharacter(characterId);
+  }
 }

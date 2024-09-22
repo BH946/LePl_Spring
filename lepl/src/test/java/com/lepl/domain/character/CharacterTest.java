@@ -1,59 +1,62 @@
 package com.lepl.domain.character;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 class CharacterTest {
-    Exp exp;
-    List<CharacterItem> characterItemList;
-    List<Follow> followList;
-    List<Notification> notificationList;
 
-    @BeforeEach // 테스트 실행 전
-    public void beforeEach() {
-        exp = Exp.createExp(0L,0L,1L);
-        characterItemList = new ArrayList<>();
-        followList = new ArrayList<>();
-        notificationList = new ArrayList<>();
-    }
+  Exp exp;
+  List<CharacterItem> characterItemList;
+  List<Follow> followList;
+  List<Notification> notificationList;
 
-    @Test
-    public void 생성_편의메서드() throws Exception {
-        // given
-        Character character;
+  @BeforeEach // 테스트 실행 전
+  public void beforeEach() {
+    exp = Exp.createExp(0L, 0L, 1L);
+    characterItemList = new ArrayList<>();
+    followList = new ArrayList<>();
+    notificationList = new ArrayList<>();
+  }
 
-        // when
-        character = Character.createCharacter(exp, characterItemList, followList, notificationList);
+  @Test
+  public void 생성_편의메서드() throws Exception {
+    // given
+    Character character;
 
-        // then
-        Assertions.assertInstanceOf(Character.class, character);
-    }
+    // when
+    character = Character.createCharacter(exp, characterItemList, followList, notificationList);
 
-    @Test
-    public void 연관관계_편의메서드() throws Exception {
-        // given
-        Character character = Character.createCharacter(exp, characterItemList, followList, notificationList);
+    // then
+    Assertions.assertInstanceOf(Character.class, character);
+  }
 
-        // when
-        character.addNotification(new Notification());
-        character.addNotification(new Notification());
-        character.addCharacterItem(new CharacterItem());
-        character.addFollow(Follow.createFollow(Character.createCharacter(Exp.createExp(0L, 0L, 1L), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),1L));
+  @Test
+  public void 연관관계_편의메서드() throws Exception {
+    // given
+    Character character = Character.createCharacter(exp, characterItemList, followList,
+        notificationList);
 
-        // then
-        Assertions.assertEquals(character.getNotifications().size(), 2);
-        Assertions.assertEquals(character.getCharacterItems().size(), 1);
-        Assertions.assertEquals(character.getFollows().size(), 1);
+    // when
+    character.addNotification(new Notification());
+    character.addNotification(new Notification());
+    character.addCharacterItem(new CharacterItem());
+    character.addFollow(Follow.createFollow(
+        Character.createCharacter(Exp.createExp(0L, 0L, 1L), new ArrayList<>(), new ArrayList<>(),
+            new ArrayList<>()), 1L));
 
-        Assertions.assertEquals(character.getNotifications().get(0).getCharacter(), character);
-        Assertions.assertEquals(character.getCharacterItems().get(0).getCharacter(), character);
-        Assertions.assertEquals(character.getFollows().get(0).getCharacter(), character);
-    }
+    // then
+    Assertions.assertEquals(character.getNotifications().size(), 2);
+    Assertions.assertEquals(character.getCharacterItems().size(), 1);
+    Assertions.assertEquals(character.getFollows().size(), 1);
+
+    Assertions.assertEquals(character.getNotifications().get(0).getCharacter(), character);
+    Assertions.assertEquals(character.getCharacterItems().get(0).getCharacter(), character);
+    Assertions.assertEquals(character.getFollows().get(0).getCharacter(), character);
+  }
 
 }
