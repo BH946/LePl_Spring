@@ -6,6 +6,7 @@ import com.lepl.domain.task.TaskStatus;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,5 +84,11 @@ public class TaskServiceV2 implements TaskService {
     TaskStatus taskStatus = task.getTaskStatus().update(completedStatus, timerOnOff);
     task.updateTaskStatus(taskStatus, remainTime);
     sleep(200);
+  }
+
+  @Override
+  @Transactional // 벌크연산 - db 적용
+  public void updateAll(List<Task> taskList, String content, LocalDateTime startTime, LocalDateTime endTime) {
+    taskRepository.updateAll(taskList, content, startTime, endTime);
   }
 }

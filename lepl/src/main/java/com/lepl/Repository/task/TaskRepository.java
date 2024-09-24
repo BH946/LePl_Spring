@@ -2,7 +2,9 @@ package com.lepl.Repository.task;
 
 import com.lepl.domain.task.Task;
 import jakarta.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -49,4 +51,23 @@ public class TaskRepository {
   public void remove(Task task) {
     em.remove(task);
   }
+
+  // in 절로 task_id 값 비교하게 했고, start~end 날짜들 내용(content) 일괄 수정
+  public void updateAll(List<Task> taskList, String content, LocalDateTime startTime, LocalDateTime endTime) {
+    startTime = startTime.toLocalDate().atTime(0, 0, 0);
+    endTime = endTime.toLocalDate().atTime(23, 59, 59);
+    List<Long> idList = taskList.stream().map(o -> o.getId()).collect(Collectors.toList());
+    int updatedCount = em.createQuery(
+            "update Task t set t.content = :content" +
+                " where t.startTime >= :startTime and t.endTime <= :endTime" +
+                " and t.id in :idList")
+        .setParameter("content", content)
+        .setParameter("idList", idList)
+        .setParameter("startTime", startTime)
+        .setParameter("endTime", endTime)
+        .executeUpdate();
+
+    System.out.println("Updated count: " + updatedCount); // 업데이트된 개수 확인
+  }
+
 }

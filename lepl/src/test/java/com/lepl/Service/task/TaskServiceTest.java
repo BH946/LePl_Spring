@@ -7,6 +7,7 @@ import com.lepl.domain.task.TaskStatus;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
@@ -79,7 +80,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Order(3)
+  @Order(4)
 //  @Rollback(false) // db 확인용
   public void 일정_삭제() throws Exception {
     // given
@@ -125,5 +126,33 @@ public class TaskServiceTest {
     Assertions.assertEquals(findTask.getId(), findTask3.getId());
     Assertions.assertEquals(findTask2.getContent(), "일정 수정해보기");
     Assertions.assertEquals(findTask3.getTaskStatus().getId(), findTask.getTaskStatus().getId());
+  }
+
+  @Test
+  @Order(3)
+  @Rollback(false) // db 확인용
+  public void 일정_일괄_업데이트_상태() throws Exception {
+    //given
+    List<Task> taskList = new ArrayList<>();
+    for (int i = 0; i < 10; i++) { //end 날짜가 하루씩 늘어나게 저장
+      Task task = Task.createTask("일괄" + i, LocalDateTime.now(), LocalDateTime.now().plusDays(i), null);
+      taskService.join(task);
+      taskList.add(task);
+    }
+
+    //when -> taskService.updateAll() 함수 추가 전 방식과 추가 후 방식 비교 (날라가는 쿼리 수가 다름)
+    for (Task t : taskList) {
+      taskService.update(t, "일정 1개씩 수정", t.getStartTime(), t.getEndTime());
+    }
+    em.flush(); em.clear();
+    Task findTask1 = taskService.findOne(taskList.get(0).getId());
+    taskService.updateAll(taskList, "일정 일괄 수정(벌크연산)", LocalDateTime.now(), LocalDateTime.now().plusDays(9L));
+    em.flush(); em.clear(); //다른 주소 사용 위해 clear 까지
+    Task findTask2 = taskService.findOne(taskList.get(0).getId());
+    //then
+    Assertions.assertEquals(taskList.get(0).getId(), findTask1.getId());
+    Assertions.assertEquals(taskList.get(0).getId(), findTask2.getId());
+    Assertions.assertEquals(findTask1.getContent(), "일정 1개씩 수정");
+    Assertions.assertEquals(findTask2.getContent(), "일정 일괄 수정(벌크연산)");
   }
 }
