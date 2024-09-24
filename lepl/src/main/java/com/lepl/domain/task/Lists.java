@@ -7,9 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import lombok.Setter;
 
 @Getter
 @Entity
+@Table(name = "LISTS", indexes = @Index(name="idx_member_date", columnList = "member_id, listsDate"))
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Lists {
 
@@ -33,7 +36,7 @@ public class Lists {
   @JoinColumn(name = "member_id") // FK
   private Member member;
 
-  private LocalDateTime listsDate;
+  private LocalDate listsDate;
   private Long timerAllUseTime = 0L; // 타이머총사용시간 -> 반환때는 시:분:초로!
   private Long curTime = 0L; // 사용시간(계산용) -> 반환 절대안함
 
@@ -69,14 +72,14 @@ public class Lists {
     lists.member = member;
     // null 이면 오늘날짜
     if (listsDate == null) {
-      lists.listsDate = LocalDateTime.now();
+      lists.listsDate = LocalDateTime.now().toLocalDate();
     } else {
-      lists.listsDate = listsDate;
+      lists.listsDate = listsDate.toLocalDate();
     }
     // null 이면 바로 pass
     for (Task task : tasks) {
       // 날짜 비교 함수
-      if (!compareDate(task, lists.getListsDate())) {
+      if (!compareDate(task, lists.getListsDate().atTime(0,0,0))) {
         continue;
       }
       lists.addTask(task); // addTask로 넣어줘야 task.setLists(this); 적용

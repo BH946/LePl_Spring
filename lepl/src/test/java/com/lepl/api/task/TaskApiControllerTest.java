@@ -66,7 +66,7 @@ class TaskApiControllerTest {
     when(member.getNickname()).thenReturn("1");
     lists = mock(Lists.class);
     when(lists.getMember()).thenReturn(member);
-    when(lists.getListsDate()).thenReturn(LocalDateTime.now());
+    when(lists.getListsDate()).thenReturn(LocalDateTime.now().toLocalDate());
     when(lists.getTasks()).thenReturn(new ArrayList<>());
 
     task = mock(Task.class);

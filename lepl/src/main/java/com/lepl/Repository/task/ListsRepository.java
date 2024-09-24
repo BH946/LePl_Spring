@@ -71,14 +71,14 @@ public class ListsRepository {
   }
 
   // 현재 들어온 날짜의 lists(=하루일정 모음) 가 있는지 조회 + memberId 까지 같이 사용 => 이렇게 해야 구분이 가능
-  // 단, LocalDateTime -> DateTime 형태로 변환 후 비교 하겠음.
+  // 단, LocalDateTime -> DateTime 형태로 변환 하겠음. (애초에 Lists는 시간단위까진 필요없는 테이블)
   public Lists findByCurrent(Long memberId, LocalDateTime curDate) {
     List<Lists> listsList = em.createQuery(
             "select l from Lists l" +
                 " where l.member.id = :memberId and" +
-                " FORMATDATETIME(l.listsDate, 'yyyy-MM-dd') = :curDate", Lists.class)
+                " l.listsDate = :curDate", Lists.class)
         .setParameter("memberId", memberId)
-        .setParameter("curDate", curDate.toLocalDate().toString())
+        .setParameter("curDate", curDate.toLocalDate())
         .getResultList();
     if (listsList.isEmpty()) {
       return null;
@@ -107,11 +107,11 @@ public class ListsRepository {
                 " join fetch l.tasks t" +
                 " join fetch t.taskStatus ts" +
                 " where l.member.id = :memberId and" +
-                " FORMATDATETIME(l.listsDate, 'yyyy-MM-dd') >= :start and" +
-                " FORMATDATETIME(l.listsDate, 'yyyy-MM-dd') <= :end", Lists.class)
+                " l.listsDate >= :start and" +
+                " l.listsDate <= :end", Lists.class)
         .setParameter("memberId", memberId)
-        .setParameter("start", start.toLocalDate().toString())
-        .setParameter("end", end.toLocalDate().toString())
+        .setParameter("start", start.toLocalDate())
+        .setParameter("end", end.toLocalDate())
         .getResultList();
   }
 

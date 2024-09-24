@@ -59,7 +59,7 @@ class ListsApiControllerTest {
 //        l1.setTimerAllUseTime(5L);
     Lists l1 = mock(Lists.class);
     when(l1.getMember()).thenReturn(member);
-    when(l1.getListsDate()).thenReturn(LocalDateTime.now());
+    when(l1.getListsDate()).thenReturn(LocalDateTime.now().toLocalDate());
     when(l1.getTasks()).thenReturn(new ArrayList<>());
     when(l1.getTimerAllUseTime()).thenReturn(5L);
 

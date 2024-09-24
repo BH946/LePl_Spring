@@ -42,7 +42,7 @@ public class ListsTest {
     // then
     Assertions.assertInstanceOf(Lists.class, lists);
     Assertions.assertEquals(LocalDateTime.now().toLocalDate(),
-        lists.getListsDate().toLocalDate()); // 금일날짜 자동적용 (날짜만 비교)
+        lists.getListsDate()); // 금일날짜 자동적용 (날짜만 비교)
   }
 
   @Test

@@ -117,7 +117,7 @@ public class ListsApiController {
 
     public ListsResDto(Lists lists) { // lazy 강제 초기화
       listsId = lists.getId();
-      listsDate = lists.getListsDate();
+      listsDate = lists.getListsDate().atTime(0,0,0);
       Long time = lists.getTimerAllUseTime();
       Long hour = time / (60 * 60 * 1000);
       time %= (60 * 60 * 1000);
