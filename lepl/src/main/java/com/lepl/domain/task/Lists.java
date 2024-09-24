@@ -23,7 +23,10 @@ import lombok.Setter;
 
 @Getter
 @Entity
-@Table(name = "LISTS", indexes = @Index(name="idx_member_date", columnList = "member_id, listsDate"))
+@Table(name = "LISTS", indexes = {
+    @Index(name="idx_member_date", columnList = "member_id, listsDate"),
+    @Index(name="idx_member_lists", columnList = "member_id, lists_id")
+})
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Lists {
 
