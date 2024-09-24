@@ -65,14 +65,14 @@ public class ListsTest {
     List<Task> findTasks = lists.getTasks(); // compareDate 에 의해 lists<->task 가 동일한 날짜만 기록되어야 정상
     List<Task> findTasks2 = lists2.getTasks();
     for (Task t : findTasks) {
-      Assertions.assertEquals(lists.getListsDate(), t.getStartTime());
+      Assertions.assertEquals(lists.getListsDate(), t.getStartTime().toLocalDate());
       Assertions.assertNotEquals(lists.getListsDate(),
-          task2.getStartTime()); // lists<->task2 날짜는 달라야 정상
+          task2.getStartTime().toLocalDate()); // lists<->task2 날짜는 달라야 정상
     }
     for (Task t2 : findTasks2) {
-      Assertions.assertEquals(lists2.getListsDate(), t2.getStartTime());
+      Assertions.assertEquals(lists2.getListsDate(), t2.getStartTime().toLocalDate());
       Assertions.assertNotEquals(lists2.getListsDate(),
-          task.getStartTime()); // lists2<->task 날짜는 달라야 정상
+          task.getStartTime().toLocalDate()); // lists2<->task 날짜는 달라야 정상
     }
   }
 }
