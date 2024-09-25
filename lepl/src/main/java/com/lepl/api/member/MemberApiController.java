@@ -15,6 +15,7 @@ import com.lepl.api.member.dto.FindMemberResponseDto;
 import com.lepl.domain.character.Character;
 import com.lepl.domain.character.Exp;
 import com.lepl.domain.member.Member;
+import com.lepl.util.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -26,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,12 +54,20 @@ public class MemberApiController {
    * 로그인 입력 -> JSON UID로 조회 후 세션Id 응답 쿠키
    */
   @PostMapping("/login") // 입력 => json 이용
-  public ResponseEntity<String> login(@RequestBody @Valid LoginMemberRequestDto loginDto,
-      HttpServletRequest request) {
+  public ResponseEntity<ApiResponse<String>> login(@RequestBody @Validated LoginMemberRequestDto loginDto,
+      BindingResult bindingResult, HttpServletRequest request) {
+    log.info("bindingResult 때문에 검증에 걸려도 정상 동작");
+    if (bindingResult.hasErrors()) {
+      log.info("검증 오류 발생 errors={}", bindingResult);
+      ApiResponse res = ApiResponse.error(HttpStatus.BAD_REQUEST.value(), bindingResult);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+    }
+
     Member findMember = memberService.findByUid(loginDto.getUid());
     // 회원아닌 경우
     if (findMember == null) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(FAIL_LOGIN); // 404 : Not Found
+      ApiResponse res = ApiResponse.success(HttpStatus.NOT_FOUND.value(), FAIL_LOGIN);
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res); // 404 : Not Found
     }
     // 회원인 경우 : 로그인 성공 처리  => 세션Id 응답 쿠키
     // 세션 있으면 세션 반환, 없으면 신규 세션 생성
@@ -64,8 +75,9 @@ public class MemberApiController {
     // 세션에 로그인 회원 정보 보관
     session.setAttribute(SESSION_NAME_LOGIN, findMember.getId());
 
+    ApiResponse res = ApiResponse.success(HttpStatus.OK.value(), SUCCESS_LOGIN);
     return ResponseEntity.status(HttpStatus.OK)
-        .body(SUCCESS_LOGIN); // 200 : OK, 쿠키에 세션을 담아서 같이 전송하므로 클라는 인증서를 발급받은 효과
+        .body(res); // 200 : OK, 쿠키에 세션을 담아서 같이 전송하므로 클라는 인증서를 발급받은 효과
   }
 
   // test용 GET (웹에서 쿠키 확인)
@@ -84,8 +96,14 @@ public class MemberApiController {
    * 회원가입 입력 -> JSON UID, Nickname 필수
    */
   @PostMapping("/register")
-  public ResponseEntity<RegisterMemberResponseDto> register(
-      @RequestBody @Valid RegisterMemberRequestDto registerDto) {
+  public ResponseEntity<ApiResponse<RegisterMemberResponseDto>> register(
+      @RequestBody @Valid RegisterMemberRequestDto registerDto, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      log.info("검증 오류 발생 errors={}", bindingResult);
+      ApiResponse res = ApiResponse.error(HttpStatus.BAD_REQUEST.value(), bindingResult);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+    }
+
     Member member = Member.createMember(registerDto.uid, registerDto.nickname);
 
     Exp exp = Exp.createExp(0L, 0L, 1L);
@@ -97,7 +115,8 @@ public class MemberApiController {
     member.setCharacter(character);
     member = memberService.join(member);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(new RegisterMemberResponseDto(member));
+    ApiResponse res = ApiResponse.success(HttpStatus.CREATED.value(), new RegisterMemberResponseDto(member));
+    return ResponseEntity.status(HttpStatus.CREATED).body(res);
   }
 
   /**

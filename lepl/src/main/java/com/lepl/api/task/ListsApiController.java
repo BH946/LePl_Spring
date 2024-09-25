@@ -4,13 +4,21 @@ import com.lepl.Service.task.ListsService;
 import com.lepl.api.argumentresolver.Login;
 import com.lepl.domain.task.Lists;
 import com.lepl.domain.task.Task;
+import com.lepl.util.ApiResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/lists")
@@ -76,19 +85,24 @@ public class ListsApiController {
    * 일정 조회(4) - 날짜범위로 Lists(=하루단위 일정모음) 조회 -> 해당 회원꺼만 하루, 한달, 1년 등등 원하는 날짜 범위만큼 사용 가능
    */
   @PostMapping(value = "/member/date")
-  public ResponseEntity<List<ListsResDto>> findByDateWithMemberTask(@Login Long memberId,
-      @RequestBody CreateListsRequestDto request) {
-    System.out.println(request.getStartTime());
-    System.out.println(request.getEndTime());
+  public ResponseEntity<ApiResponse<List<ListsResDto>>> findByDateWithMemberTask(@Login Long memberId,
+      @RequestBody @Validated CreateListsRequestDto request, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      log.info("검증 오류 발생 errors={}", bindingResult);
+      ApiResponse res = ApiResponse.error(HttpStatus.BAD_REQUEST.value(), bindingResult);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+    }
     List<Lists> listsList = listsService.findByDateWithMemberTask(memberId, request.startTime,
         request.endTime);
     if (listsList.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+      ApiResponse res = ApiResponse.success(HttpStatus.NO_CONTENT.value(), null);
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(res);
     }
     List<ListsResDto> result = listsList.stream()
         .map(o -> new ListsResDto(o))
         .collect(Collectors.toList());
-    return ResponseEntity.status(HttpStatus.OK).body(result);
+    ApiResponse res = ApiResponse.success(HttpStatus.OK.value(), result);
+    return ResponseEntity.status(HttpStatus.OK).body(res);
   }
 
   /**
@@ -111,13 +125,13 @@ public class ListsApiController {
   static class ListsResDto {
 
     private Long listsId;
-    private LocalDateTime listsDate; // 등록 날짜
+    private LocalDate listsDate; // 등록 날짜
     private String timerAllUseTime; // 타이머총사용시간
     private List<TaskDto> listsTasks;
 
     public ListsResDto(Lists lists) { // lazy 강제 초기화
       listsId = lists.getId();
-      listsDate = lists.getListsDate().atTime(0,0,0);
+      listsDate = lists.getListsDate();
       Long time = lists.getTimerAllUseTime();
       Long hour = time / (60 * 60 * 1000);
       time %= (60 * 60 * 1000);
@@ -161,8 +175,9 @@ public class ListsApiController {
 
   @Getter
   static class CreateListsRequestDto {
-
+    @NotNull(message = "날짜 범위는 필수입니다.")
     private LocalDateTime startTime;
+    @NotNull(message = "날짜 범위는 필수입니다.")
     private LocalDateTime endTime;
   }
 

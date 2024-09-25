@@ -2,6 +2,7 @@ package com.lepl.api.character;
 
 import com.lepl.Service.character.ItemService;
 import com.lepl.domain.character.Item;
+import com.lepl.util.ApiResponse;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,8 +11,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +33,21 @@ public class ItemApiController {
    * 아이템 등록
    */
   @GetMapping("/add")
-  public ResponseEntity<ItemDto> saveItem(@RequestBody @Valid ItemDto request) {
+  public ResponseEntity<ApiResponse<ItemDto>> saveItem(@RequestBody @Valid ItemDto request, BindingResult bindingResult) {
+    if (request.getPrice() != null && request.getPurchase_quantity() != null) {
+      int resultPrice = request.getPrice() * request.getPurchase_quantity();
+      if (resultPrice <= 0) {
+        bindingResult.reject(null, null, "전체 가격은 0원 초과야 합니다. 현재 가격은 "+resultPrice);
+        log.info("검증 오류 발생 errors={}", bindingResult.getAllErrors());
+        ApiResponse res = ApiResponse.errorObject(HttpStatus.BAD_REQUEST.value(), bindingResult);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+      }
+    }
+    if (bindingResult.hasErrors()) {
+      log.info("검증 오류 발생 errors={}", bindingResult);
+      ApiResponse res = ApiResponse.error(HttpStatus.BAD_REQUEST.value(), bindingResult);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+    }
     Item item = new Item();
     item.setName(request.getName());
     item.setType(request.getType());
@@ -41,8 +58,8 @@ public class ItemApiController {
 
     //아이템 등록
     itemService.save(item);
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(new ItemDto(item));
+    ApiResponse res = ApiResponse.success(HttpStatus.CREATED.value(), new ItemDto(item));
+    return ResponseEntity.status(HttpStatus.CREATED).body(res);
   }
 
   /*
@@ -97,8 +114,10 @@ public class ItemApiController {
 
     private String type;
     private String name;
-    private int price;
-    private int purchase_quantity;
+    @Range(max = 10000)
+    private Integer price;
+    @Range(min = 1, max = 99)
+    private Integer purchase_quantity;
     private LocalDateTime start_time;
     private LocalDateTime end_time;
 
