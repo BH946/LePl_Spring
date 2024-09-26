@@ -16,7 +16,7 @@ public class ItemService {
   @Autowired
   private ItemRepository itemRepository;
   /*
-   * save, findOne, findAll, remove
+   * save, findOne, findAll, remove, findByName, updatePurchase(상품구매량)
    * */
 
   /*

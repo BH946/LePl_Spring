@@ -13,7 +13,7 @@ public class ItemRepository {
   private final EntityManager em;
 
   /*
-   * save, findOne, findAll, remove
+   * save, findOne, findAll, remove, findByName, updatePurchase
    * */
 
   public void save(Item item) {

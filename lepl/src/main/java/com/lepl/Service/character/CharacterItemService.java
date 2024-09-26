@@ -15,7 +15,7 @@ public class CharacterItemService {
   private final CharacterItemRepository characterItemRepository;
 
   /**
-   * save, findOne, findAll, remove
+   * join, findOne, findAll, remove, findAllWithMemberItem(사용자소유아이템전체조회), updateStatus(아이템착용여부업뎃)
    */
   @Transactional // 쓰기모드
   public Long join(CharacterItem characterItem) {

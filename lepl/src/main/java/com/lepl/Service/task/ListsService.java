@@ -17,8 +17,8 @@ public class ListsService {
   private final ListsRepository listsRepository;
 
   /**
-   * findAllWithMemberTask, findByDateWithMemberTask, join, findByCurrent, findOneWithMemberTask,
-   * remove
+   * findAllWithMemberTask(멤버일정모두찾기), findByDateWithMemberTask(멤버일정날짜로찾기), join, findByCurrent(현재날짜로찾기), findOneWithMemberTask,
+   * remove, updateTime(타이머종료시경험치업뎃)
    */
 
   public Lists findOne(Long id) {

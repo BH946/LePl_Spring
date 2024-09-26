@@ -14,7 +14,7 @@ public class CharacterItemRepository {
   private final EntityManager em;
 
   /**
-   * save, findOne, findAll, remove
+   * save, findOne, findAll, remove, findAllWithMemberItem, updateStatus
    */
   public void save(CharacterItem characterItem) {
     if (characterItem.getId() == null) {

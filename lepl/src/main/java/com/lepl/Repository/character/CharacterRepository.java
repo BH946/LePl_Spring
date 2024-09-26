@@ -14,7 +14,7 @@ public class CharacterRepository {
   private final EntityManager em;
 
   /**
-   * save, findOne, remove
+   * save, findOne, remove, findCharacterWithMember
    */
   public void save(Character character) {
     if (character.getId() == null) {

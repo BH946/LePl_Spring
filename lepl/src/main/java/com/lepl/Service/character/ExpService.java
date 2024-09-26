@@ -17,7 +17,7 @@ public class ExpService {
   private final ExpRepository expRepository;
 
   /**
-   * join, findOne, findOneWithMember, remove, update, initPointToday
+   * join, findOne, findOneWithMember, remove, update, initPointToday(하루제한경험치량초기화)
    */
   @Transactional // 쓰기모드
   public Exp join(Exp exp) {

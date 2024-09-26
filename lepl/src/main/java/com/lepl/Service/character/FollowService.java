@@ -15,7 +15,7 @@ public class FollowService {
   private final FollowRepository followRepository;
 
   /**
-   * join, findOne, findAll, remove, findAllWithFollowing, findAllWithFollower
+   * join, validateDuplicateFollow(중복검증), findOne, findAll, remove, findAllWithFollowing(팔로잉조회), findAllWithFollower(팔로워조회)
    */
   @Transactional // 쓰기모드
   public Long join(Follow follow) {

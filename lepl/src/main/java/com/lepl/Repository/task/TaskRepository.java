@@ -15,7 +15,7 @@ public class TaskRepository {
   private final EntityManager em;
 
   /**
-   * save, findOne, findAll, findOneWithMember, remove
+   * save, findOne, findAll, findOneWithMember, remove, updateAll
    */
   public void save(Task task) {
     if (task.getId() == null) { // null 인 경우 db에 없다는 의미(db에 insert 할 때 id 생성)

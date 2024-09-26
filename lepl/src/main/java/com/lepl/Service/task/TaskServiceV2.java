@@ -28,7 +28,7 @@ public class TaskServiceV2 implements TaskService {
   private final MeterRegistry registry;
 
   /**
-   * join, findOne, findOneWithMember, remove, update, updateState
+   * join, findOne, findOneWithMember, remove, update(일정수정), updateState(일정상태수정), updateAll(일정수정여러개한번에)
    */
 
   /**
