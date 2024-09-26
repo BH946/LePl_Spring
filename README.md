@@ -165,7 +165,7 @@
 - 사용 Table: (11개) Member, Profile, Lists, Task, TaskStatus, Character, CharacterItem, Exp, Follow, Notification, Item(상점대용.독립관계)  
 - Timer 생략: 타이머 부분은 클라에서 타임시간 받으면 경험치 업뎃
 
-[![ERDCloud](https://user-images.githubusercontent.com/80165014/236461896-b89f1ef7-660c-4f3f-8a92-842adb3db44c.png)](https://www.erdcloud.com/d/ZThXeWGTiKuj23yzT "ERDCloud로 이동하기")
+[![ERDCloud](https://user-images.githubusercontent.com/80165014/236461896-b89f1ef7-660c-4f3f-8a92-842adb3db44c.png)](https://www.erdcloud.com/d/qhJLFCiq5KpRSDN87 "ERDCloud로 이동하기")
 
 <br><br>
 
@@ -407,3 +407,4 @@ API 명세서 작성했으니 기능들 자세한건 이곳을 참고
   * **[`/lepl/src/main/java/com/lepl/util/Messages.java`](./lepl/src/main/java/com/lepl/util/Messages.java)**
     * **Util - 메시지 관련**
     * 메시지 국제화 관리하게 messages.properties 를 활용하면 되긴 하지만 그냥 이걸로 끝냈다.
+
