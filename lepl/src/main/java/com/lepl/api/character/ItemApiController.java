@@ -29,15 +29,17 @@ public class ItemApiController {
 
   private final ItemService itemService;
   // 여긴 좀 대충 하겠음. 간단하게 GET으로 통일도 하고.
+
   /**
    * 아이템 등록
    */
   @GetMapping("/add")
-  public ResponseEntity<ApiResponse<ItemDto>> saveItem(@RequestBody @Valid ItemDto request, BindingResult bindingResult) {
+  public ResponseEntity<ApiResponse<ItemDto>> saveItem(@RequestBody @Valid ItemDto request,
+      BindingResult bindingResult) {
     if (request.getPrice() != null && request.getPurchase_quantity() != null) {
       int resultPrice = request.getPrice() * request.getPurchase_quantity();
       if (resultPrice <= 0) {
-        bindingResult.reject(null, null, "전체 가격은 0원 초과야 합니다. 현재 가격은 "+resultPrice);
+        bindingResult.reject(null, null, "전체 가격은 0원 초과야 합니다. 현재 가격은 " + resultPrice);
         log.info("검증 오류 발생 errors={}", bindingResult.getAllErrors());
         ApiResponse res = ApiResponse.errorObject(HttpStatus.BAD_REQUEST.value(), bindingResult);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);

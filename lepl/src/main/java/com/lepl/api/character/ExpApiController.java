@@ -14,7 +14,6 @@ import com.lepl.domain.member.Member;
 import com.lepl.domain.task.Lists;
 import com.lepl.domain.task.Task;
 import com.lepl.domain.task.TaskStatus;
-import jakarta.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -75,7 +74,6 @@ public class ExpApiController {
     if (exp == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-
     //화폐 업데이트를 위해 사용
     Character character = member.getCharacter();
     Long money = character.getMoney();

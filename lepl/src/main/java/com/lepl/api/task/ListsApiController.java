@@ -5,8 +5,6 @@ import com.lepl.api.argumentresolver.Login;
 import com.lepl.domain.task.Lists;
 import com.lepl.domain.task.Task;
 import com.lepl.util.ApiResponse;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -85,7 +83,8 @@ public class ListsApiController {
    * 일정 조회(4) - 날짜범위로 Lists(=하루단위 일정모음) 조회 -> 해당 회원꺼만 하루, 한달, 1년 등등 원하는 날짜 범위만큼 사용 가능
    */
   @PostMapping(value = "/member/date")
-  public ResponseEntity<ApiResponse<List<ListsResDto>>> findByDateWithMemberTask(@Login Long memberId,
+  public ResponseEntity<ApiResponse<List<ListsResDto>>> findByDateWithMemberTask(
+      @Login Long memberId,
       @RequestBody @Validated CreateListsRequestDto request, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       log.info("검증 오류 발생 errors={}", bindingResult);
@@ -175,6 +174,7 @@ public class ListsApiController {
 
   @Getter
   static class CreateListsRequestDto {
+
     @NotNull(message = "날짜 범위는 필수입니다.")
     private LocalDateTime startTime;
     @NotNull(message = "날짜 범위는 필수입니다.")
