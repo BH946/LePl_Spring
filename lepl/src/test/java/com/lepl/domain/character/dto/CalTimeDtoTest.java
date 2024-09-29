@@ -7,19 +7,20 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 class CalTimeDtoTest {
 
-    @Test
-    public void 시간_계산() throws Exception {
-        // given
-        CalTimeDto calTimeDto = new CalTimeDto(0L, 60 * 60 * 1000*5L);
-        calTimeDto.setRemainTime(0L);
+  @Test
+  public void 시간_계산() throws Exception {
+    // given
+    CalTimeDto calTimeDto = new CalTimeDto(0L, 60 * 60 * 1000 * 5L);
+    calTimeDto.setRemainTime(0L);
 
-        // when
-        calTimeDto.calTime();
+    // when
+    calTimeDto.calTime();
 
-        // then
-        log.info("completed : {}, timerOnOff : {}", calTimeDto.getCompleted(), calTimeDto.getTimerOnOff());
-        log.info("curTime : {}, pointTimer : {}", calTimeDto.getCurTime(), calTimeDto.getPointTimer());
-        Assertions.assertEquals(calTimeDto.getCompleted(), true);
-        Assertions.assertEquals(calTimeDto.getPointTimer(), 5);
-    }
+    // then
+    log.info("completed : {}, timerOnOff : {}", calTimeDto.getCompleted(),
+        calTimeDto.getTimerOnOff());
+    log.info("curTime : {}, pointTimer : {}", calTimeDto.getCurTime(), calTimeDto.getPointTimer());
+    Assertions.assertEquals(calTimeDto.getCompleted(), true);
+    Assertions.assertEquals(calTimeDto.getPointTimer(), 5);
+  }
 }

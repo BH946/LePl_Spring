@@ -63,7 +63,7 @@ public class MemberService {
     /**
      * 회원 최신순 조회 + 캐시
      */
-    @Cacheable(value = "members", key = "#pageId", cacheNames = "members") // [캐시 없으면 저장] 조회
+    @Cacheable(value = "members", key = "#pageId") // [캐시 없으면 저장] 조회
     public List<FindMemberResponseDto> findAllWithPage(int pageId) {
         return memberRepository.findAllWithPage(pageId);
     }

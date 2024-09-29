@@ -1,17 +1,18 @@
-<<<<<<< HEAD
 # Intro
 
 **Intro(단축키,기본규칙) -> 개발과정 -> 기능들 로직(EX:로그인) -> 폴더구조 순서로 정리하겠다.**
 
-**`개발과정`과 `기능들 로직` 은 개발을 진행하면서 계속 수정해야한다.**
+**총 기능**
 
-* **현재 "로그인", "플래너" 기능 개발완료했으며 남은것은 "타이머", "캐릭터(친구,화폐,아이템 등)" 기능**
+* **"로그인", "플래너" , "타이머(클라단에서 해결한다 함)", "캐릭터(경험치)", "팔로잉", "알림", "아이템" 기능**
 
 <br>
 
 **단축키**
 
 * `Alt + Insert` : getter, setter, constructor 등 자동 생성
+* `Ctrl + Alt + O` : 사용안하는 import 자동 정리(제거 등)
+* `Ctrl + Alt + L` : 자동 정렬 -> Google Java Convention이나 Default 로 사용중
 * `Ctrl + Alt + V` : 변수 선언부를 자동 작성
 * `Ctrl + Alt + M` : 코드 리팩토링하기 쉽게끔 함수 자동 생성
 * `Ctrl+T->extra method` : 코드 리팩토링하기 쉽게끔 드래그한 코드를 하나의 함수로 자동 생성
@@ -26,10 +27,12 @@
 
 **개발 환경**
 
-* h2 : jdbc:h2:tcp://localhost/~/lvpldb/lvpl
-* spring boot : '2.7.11'
-* java : 11
-* dependencies : JUnit4
+* IDE: IntelliJ
+* Build Tool: Gradle - Groovy
+* java : 11 -> 17
+* spring boot : '2.7.11' -> '3.1.2'
+* dependencies : JUnit4 -> JUnit5
+* database: jdbc:h2:tcp://localhost/~/lvpldb/lvpl
 
 <br>
 
@@ -103,11 +106,15 @@
 
 ## 1. 요구사항 분석
 
+**내용이 조금 수정되어서 다를 수 있음**
+
 ![image](https://user-images.githubusercontent.com/80165014/236459680-a1ac2775-9f12-4c0f-9c2b-4171aa1baa50.png)
 
 <br><br>
 
 ## 2. 구체적인 요구사항 목록
+
+**내용이 조금 수정되어서 다를 수 있음**
 
 ![image](https://user-images.githubusercontent.com/105353163/243077791-cb3ef086-fbb6-42bc-bf60-d346905a5fb5.png) 
 
@@ -119,11 +126,17 @@
 
 ## 3. 설계시작
 
+**내용이 조금 수정되어서 다를 수 있음**
+
+
+
 ![image](https://user-images.githubusercontent.com/105353163/243077831-b869af6d-4c9b-4a9b-a8d8-5ceae6f38fbd.png) 
 
 <br>
 
 ### 3-1. 도메인 모델 분석
+
+**내용이 조금 수정되어서 다를 수 있음**
 
 ![image](https://user-images.githubusercontent.com/105353163/243077840-c16f7956-a82d-478b-8534-907c959e6466.png) 
 
@@ -131,11 +144,15 @@
 
 ### 3-2. 테이블 설계
 
+**내용이 조금 수정되어서 다를 수 있음**
+
 ![image](https://user-images.githubusercontent.com/105353163/243077849-947a0afc-2439-4306-a092-fcb32dab8bc1.png) 
 
 <br>
 
 ### 3-3. 엔티티 설계
+
+**내용이 조금 수정되어서 다를 수 있음**
 
 ![image](https://user-images.githubusercontent.com/105353163/243077854-3bedda7f-726b-42e0-8cf6-9034f5aa93a8.png) 
 
@@ -143,7 +160,12 @@
 
 ### 3-4. ERDCloud
 
-[![ERDCloud](https://user-images.githubusercontent.com/80165014/236461896-b89f1ef7-660c-4f3f-8a92-842adb3db44c.png)](https://www.erdcloud.com/d/ZThXeWGTiKuj23yzT "ERDCloud로 이동하기")
+**여긴 제대로 정리**
+
+- 사용 Table: (11개) Member, Profile, Lists, Task, TaskStatus, Character, CharacterItem, Exp, Follow, Notification, Item(상점대용.독립관계)  
+- Timer 생략: 타이머 부분은 클라에서 타임시간 받으면 경험치 업뎃
+
+[![ERDCloud](https://user-images.githubusercontent.com/80165014/236461896-b89f1ef7-660c-4f3f-8a92-842adb3db44c.png)](https://www.erdcloud.com/d/qhJLFCiq5KpRSDN87 "ERDCloud로 이동하기")
 
 <br><br>
 
@@ -215,88 +237,60 @@
 
 <br><br>
 
+## 3. 나머지 기능 - 캐릭터
+
+API 명세서 작성했으니 기능들 자세한건 이곳을 참고
+
+**API 명세서 참고 : https://documenter.getpostman.com/view/21970313/2s93mBwec5**
+
+<br><br>
+
 # Folder Structure
 
 **API 명세서 : https://documenter.getpostman.com/view/21970313/2s93mBwec5**
 
 <br>
 
-* **[`/lvpl/src/main/resources/application.yml`](./lvpl/src/main/resources/application.yml)**
+* **[`/lepl/src/main/resources/application.yml`](./lepl/src/main/resources/application.yml)**
   * **db연결 등등 환경 설정**
-  
-* **[`/lvpl/src/main/java/com/lvpl/LvplApplication.java`](./lvpl/src/main/java/com/lvpl/LvplApplication.java)**
+* **[`/lepl/src/main/java/com/lepl/leplApplication.java`](./lepl/src/main/java/com/lepl/leplApplication.java)**
   * **제일 최상의 루트 파일이며, 이 파일을 실행해서 서버를 오픈**
-  
-* **[`/lvpl/src/main/java/com/lvpl/domain/character/Character.java`](./lvpl/src/main/java/com/lvpl/domain/character/Character.java)**
-  * **도메인(엔티티) - 캐릭터 관련**
-  * [`/lvpl/src/main/java/com/lvpl/domain/character/CharacterItem.java`](./lvpl/src/main/java/com/lvpl/domain/character/CharacterItem.java)
-    * 캐릭터가 가진 아이템 목록
-  * [`/lvpl/src/main/java/com/lvpl/domain/character/Coin.java`](./lvpl/src/main/java/com/lvpl/domain/character/Coin.java)
-    * 화폐
-  * [`/lvpl/src/main/java/com/lvpl/domain/character/Exp.java`](./lvpl/src/main/java/com/lvpl/domain/character/Exp.java)
-    * 경험치
-  
-* **[`/lvpl/src/main/java/com/lvpl/domain/member/Member.java`](./lvpl/src/main/java/com/lvpl/domain/member/Member.java)**
+* **[`/lepl/src/main/java/com/lepl/aop/TimeTraceAop.java`](./lepl/src/main/java/com/lepl/aop/TimeTraceAop.java)**
+  * **AOP 설정 - 성능 테스트 위해 "함수 실행시간 측정 AOP"**
 
-  * **도메인(엔티티) - 회원 관련**
-  * uid(회원 로그인용)가 필수
-  * 프로필, 캐릭터, 일정들 관계
-
-  * [`/lvpl/src/main/java/com/lvpl/domain/member/Profile.java`](./lvpl/src/main/java/com/lvpl/domain/member/Profile.java)
-    * 회원 프로필(정보)
-
-* **[`/lvpl/src/main/java/com/lvpl/domain/task/Task.java`](./lvpl/src/main/java/com/lvpl/domain/task/Task.java)**
-
-  * **도메인(엔티티) - 일정(플래너) 관련**
-
-  * [`/lvpl/src/main/java/com/lvpl/domain/task/TaskStatus.java`](./lvpl/src/main/java/com/lvpl/domain/task/TaskStatus.java)
-    * 상태 : 일정완료 유무, 타이머사용 유무
-  * [`/lvpl/src/main/java/com/lvpl/domain/task/Lists.java`](./lvpl/src/main/java/com/lvpl/domain/task/Lists.java)
-    * 날짜별로 Task(일정)들을 하나로(Lists) 묶은 구조
-  * [`/lvpl/src/main/java/com/lvpl/domain/task/timer/Timer.java`](./lvpl/src/main/java/com/lvpl/domain/task/timer/Timer.java)
-    * 일정(플래너)의 타이머 기능 관련
-    * 하나의 Task(일정)을 타이머 사용시 활용
-    * 타이머 시작과 끝시간을 기록
-    * [`/lvpl/src/main/java/com/lvpl/domain/task/timer/TimerStatus.java`](./lvpl/src/main/java/com/lvpl/domain/task/timer/TimerStatus.java)
-      * 상태 : ALLOW, FOCUS (허용앱 사용상태와 집중상태로 구분)
-
-* **[`/lvpl/src/main/java/com/lvpl/Repository/member/MemberRepository.java`](./lvpl/src/main/java/com/lvpl/Repository/member/MemberRepository.java)**
-  * **레퍼지토리 - 회원 관련**
-  * save, findOne, findByUid 기능
-* **[`/lvpl/src/main/java/com/lvpl/Repository/task/TaskRepository.java`](./lvpl/src/main/java/com/lvpl/Repository/task/TaskRepository.java)**
-  * **레퍼지토리 - 일정 관련**
-  * save, findOne, findAll, findOneWithMember, remove 기능
-  * [`/lvpl/src/main/java/com/lvpl/Repository/task/TaskStatusRepository.java`](./lvpl/src/main/java/com/lvpl/Repository/task/TaskStatusRepository.java)
-  * [`/lvpl/src/main/java/com/lvpl/Repository/task/ListsRepository.java`](./lvpl/src/main/java/com/lvpl/Repository/task/ListsRepository.java)
-    * 일정에서 Lists 관련
-    * findOne, findByDate, findAll, save, findByCurrent, findOneWithTask, findAllWithTask, findAllWithMemberTask, findByDateWithMemberTask, findOneWithMemberTask, remove 기능
-  * [`/lvpl/src/main/java/com/lvpl/Repository/task/timer/TimerRepository.java`](./lvpl/src/main/java/com/lvpl/Repository/task/timer/TimerRepository.java)
-    * 일정에서 타이머 관련
-    * save, findOne, findAll 기능
-* **[`/lvpl/src/main/java/com/lvpl/Service/member/MemberService.java`](./lvpl/src/main/java/com/lvpl/Service/member/MemberService.java)**
-  * **서비스 - 회원 관련**
-  * join(중복도 검증), findOne, findByUid 기능
-* **[`/lvpl/src/main/java/com/lvpl/Service/task/TaskService.java`](./lvpl/src/main/java/com/lvpl/Service/task/TaskService.java)**
-  * **서비스 - 일정 관련**
-  * join, findOne, findTasks, findOneWithMember, remove, update 기능
-  * [`/lvpl/src/main/java/com/lvpl/Service/task/TaskStatusService.java`](./lvpl/src/main/java/com/lvpl/Service/task/TaskStatusService.java)
-  * [`/lvpl/src/main/java/com/lvpl/Service/task/ListsService.java`](./lvpl/src/main/java/com/lvpl/Service/task/ListsService.java)
-    * 일정에서 Lists 관련
-    * join, findOne, findOneWithTask, findByDate, findByCurrent, findAll, findAllWithTask, findAllWithMemberTask, findByDateWithMemberTask, findOneWithMemberTask, remove 기능
-  * [`/lvpl/src/main/java/com/lvpl/Service/task/timer/TimerService.java`](./lvpl/src/main/java/com/lvpl/Service/task/timer/TimerService.java)
-    * 일정에서 타이머 관련
-    * join, findOne, findAll 기능
-* **[`/lvpl/src/main/java/com/lvpl/api/member/MemberApiController.java`](./lvpl/src/main/java/com/lvpl/api/member/MemberApiController.java)**
+* **[`/lepl/src/main/java/com/lepl/api/argumentresolver/Login.java`](./lepl/src/main/java/com/lepl/api/argumentresolver/Login.java)**
+  * **위에서 언급한 @Login 어노테이션을 등록하기 위한 인터페이스**
+  * @Target, @Retention 어노테이션 활용
+  * **[`/lepl/src/main/java/com/lepl/api/argumentresolver/LoginMemberArgumentResolver.java`](./lepl/src/main/java/com/lepl/api/argumentresolver/LoginMemberArgumentResolver.java)**
+    * `HandlerMethodArgumentResolver` 인터페이스를 구현해서 `supportsParameter, resolveArgument` 를 오버라이딩
+    * supportsParameter 함수가 true 면 resolveArgument 함수를 실행하는 구조
+      * **@Login 어노테이션인지 판단하고 true면 세션에서 memberId 구해 옴**
+* **[`/lepl/src/main/java/com/lepl/api/interceptor/MemberCheckInterceptor.java`](./lepl/src/main/java/com/lepl/api/interceptor/MemberCheckInterceptor.java)**
+  * **인터셉터 등록할 클래스**
+  * `HandlerInterceptor` 인터페이스를 구현해서 `preHandle` 을 오버라이딩
+  * 컨트롤러 접근전에 인터셉터에서 사용자인지 인증을 한다.
+* **[`/lepl/src/main/java/com/lepl/api/member/MemberApiController.java`](./lepl/src/main/java/com/lepl/api/member/MemberApiController.java)**
   * **컨트롤러(api) - 회원 관련**
   * **자세한 것은 API 명세서 확인**
-* **[`/lvpl/src/main/java/com/lvpl/api/task/TaskApiController.java`](./lvpl/src/main/java/com/lvpl/api/task/TaskApiController.java)**
+* **[`/lepl/src/main/java/com/lepl/api/task/TaskApiController.java`](./lepl/src/main/java/com/lepl/api/task/TaskApiController.java)**
   * **컨트롤러(api) - 일정 관련**
   * **자세한 것은 API 명세서 확인**
-  * [`/lvpl/src/main/java/com/lvpl/api/task/ListsApiController.java`](./lvpl/src/main/java/com/lvpl/api/task/ListsApiController.java)
+  * [`/lepl/src/main/java/com/lepl/api/task/ListsApiController.java`](./lepl/src/main/java/com/lepl/api/task/ListsApiController.java)
     * 일정에서 Lists 관련
-* **[`/lvpl/src/main/java/com/lvpl/api/ApiConfig.java`](./lvpl/src/main/java/com/lvpl/api/ApiConfig.java)**
-  * **설정파일 - @Configuration 사용**
-  * **`WebMvcConfigurer` 인터페이스 구현해서 오버라이딩(`addArgumentResolvers, addInterceptors`) 사용**
+* **[`/lepl/src/main/java/com/lepl/api/character/CharacterItemApiController.java`](./lepl/src/main/java/com/lepl/api/character/CharacterItemApiController.java)**
+  * **컨트롤러(api) - 캐릭터 관련**
+  * **자세한 것은 API 명세서 확인**
+    * **[`/lepl/src/main/java/com/lepl/api/character/ExpApiController.java`](./lepl/src/main/java/com/lepl/api/character/ExpApiController.java)**
+      * 캐릭터의 경험치 관련
+    * **[`/lepl/src/main/java/com/lepl/api/character/FollowApiController.java`](./lepl/src/main/java/com/lepl/api/character/FollowApiController.java)**
+      * 캐릭터의 팔로잉 관련
+    * **[`/lepl/src/main/java/com/lepl/api/character/ItemApiController.java`](./lepl/src/main/java/com/lepl/api/character/ItemApiController.java)**
+      * 아이템 관련
+    * **[`/lepl/src/main/java/com/lepl/api/character/NotificationApiController.java`](./lepl/src/main/java/com/lepl/api/character/NotificationApiController.java)**
+      * 알림 관련
+* **[`/lepl/src/main/java/com/lepl/config/ApiConfig.java`](./lepl/src/main/java/com/lepl/config/ApiConfig.java)**
+  * **설정파일(설정 4개정도 추가) - @Configuration 사용**
+  * **`WebMvcConfigurer` 인터페이스 구현해서 오버라이딩(`addArgumentResolvers, addInterceptors, addResourceHandlers, addCorsMappings`) 사용**
     * **`addArgumentResolvers` 의 경우 `HandlerMethodArgumentResolver` 를 추가**
       * `LoginMemberArgumentResolver` 는 `HandlerMethodArgumentResolver` 인터페이스를 구현
       * @Login 어노테이션을 등록 및 해당 어노테이션을 구현함
@@ -306,38 +300,111 @@
       * **회원인지 인증하기 위함**
       * 모든 경로(`"/**"`)에 대해 실행되며, 
       * 몇 가지 경로(`"/", "/api/v1/members/login", "/api/v1/members/register", "/api/v1/members/logout", "/css/**", "/*.ico", "/error"`)는 인터셉터가 적용되지 않도록 설정
-  * **[`/lvpl/src/main/java/com/lvpl/api/argumentresolver/Login.java`](./lvpl/src/main/java/com/lvpl/api/argumentresolver/Login.java)**
-    * **위에서 언급한 @Login 어노테이션을 등록하기 위한 인터페이스**
-    * @Target, @Retention 어노테이션 활용
-    * **[`/lvpl/src/main/java/com/lvpl/api/argumentresolver/LoginMemberArgumentResolver.java`](./lvpl/src/main/java/com/lvpl/api/argumentresolver/LoginMemberArgumentResolver.java)**
-      * `HandlerMethodArgumentResolver` 인터페이스를 구현해서 `supportsParameter, resolveArgument` 를 오버라이딩
-      * supportsParameter 함수가 true 면 resolveArgument 함수를 실행하는 구조
-      * @Login 어노테이션인지 판단하고 true면 세션에서 memberId 구해옴
-  * **[`/lvpl/src/main/java/com/lvpl/api/interceptor/MemberCheckInterceptor.java`](./lvpl/src/main/java/com/lvpl/api/interceptor/MemberCheckInterceptor.java)**
-    * **위에서 언급한 인터셉터 등록 클래스**
-    * `HandlerInterceptor` 인터페이스를 구현해서 `preHandle` 을 오버라이딩
-    * 사용자인지 인증을 한다.
+    * `addResourceHandlers` 의 경우 정적이미지 경로 핸들링 + 브라우저 캐시 적용
+    * `addCorsMappings` 의 경우 CORS 해결
+  * **[`/lepl/src/main/java/com/lepl/config/CacheConfig.java`](./lepl/src/main/java/com/lepl/config/CacheConfig.java)**
+    * `CacheManager` 2개 구현 - 서버단 메모리 캐시 사용 커스텀
+* **[`/lepl/src/main/java/com/lepl/domain/character/Character.java`](./lepl/src/main/java/com/lepl/domain/character/Character.java)**
+  * **도메인(엔티티) - 캐릭터 관련**
+  * [`/lepl/src/main/java/com/lepl/domain/character/CharacterItem.java`](./lepl/src/main/java/com/lepl/domain/character/CharacterItem.java)
+    * 캐릭터가 가진 아이템 목록
+  * [`/lepl/src/main/java/com/lepl/domain/character/Exp.java`](./lepl/src/main/java/com/lepl/domain/character/Exp.java)
+    * 경험치
+  * [`/lepl/src/main/java/com/lepl/domain/character/Follow.java`](./lepl/src/main/java/com/lepl/domain/character/Follow.java)
+    * 팔로우
+  * [`/lepl/src/main/java/com/lepl/domain/character/Item.java`](./lepl/src/main/java/com/lepl/domain/character/Item.java)
+    * 아이템
+  * [`/lepl/src/main/java/com/lepl/domain/character/Notification.java`](./lepl/src/main/java/com/lepl/domain/character/Notification.java)
+    * 알림
+* **[`/lepl/src/main/java/com/lepl/domain/member/Member.java`](./lepl/src/main/java/com/lepl/domain/member/Member.java)**
+  * **도메인(엔티티) - 회원 관련**
+  * uid(회원 로그인용)가 필수
+  * 프로필, 캐릭터, 일정들 관계
 
-=======
-# LePl_Spring
+  * [`/lepl/src/main/java/com/lepl/domain/member/Profile.java`](./lepl/src/main/java/com/lepl/domain/member/Profile.java)
+    * 회원 프로필(정보)
+* **[`/lepl/src/main/java/com/lepl/domain/task/Task.java`](./lepl/src/main/java/com/lepl/domain/task/Task.java)**
 
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/e41bbda9-4f44-41dd-bba9-517d141814a2)
+  * **도메인(엔티티) - 일정(플래너) 관련**
 
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/2db8cb10-0376-4a7c-9579-6874dea3628a)
+  * [`/lepl/src/main/java/com/lepl/domain/task/TaskStatus.java`](./lepl/src/main/java/com/lepl/domain/task/TaskStatus.java)
+    * 상태 : 일정완료 유무, 타이머사용 유무
+  * [`/lepl/src/main/java/com/lepl/domain/task/Lists.java`](./lepl/src/main/java/com/lepl/domain/task/Lists.java)
+    * 날짜별로 Task(일정)들을 하나로(Lists) 묶은 구조
+  * [`/lepl/src/main/java/com/lepl/domain/task/timer/Timer.java`](./lepl/src/main/java/com/lepl/domain/task/timer/Timer.java)
+    * 일정(플래너)의 타이머 기능 관련 -> 삭제했음. 클라로 책임전가
+    * 하나의 Task(일정)을 타이머 사용시 활용
+    * 타이머 시작과 끝시간을 기록
+    * [`/lepl/src/main/java/com/lepl/domain/task/timer/TimerStatus.java`](./lepl/src/main/java/com/lepl/domain/task/timer/TimerStatus.java)
+      * 상태 : ALLOW, FOCUS (허용앱 사용상태와 집중상태로 구분)
+* **[`/lepl/src/main/java/com/lepl/Repository/member/MemberRepository.java`](./lepl/src/main/java/com/lepl/Repository/member/MemberRepository.java)**
+  * **레퍼지토리 - 회원 관련**
+  * save, findOne, findByUid, findAllWithPage 기능
+* **[`/lepl/src/main/java/com/lepl/Repository/task/TaskRepository.java`](./lepl/src/main/java/com/lepl/Repository/task/TaskRepository.java)**
+  * **레퍼지토리 - 일정 관련**
+  * save, findOne, findAll, findOneWithMember, remove, updateAll 기능
+  * [`/lepl/src/main/java/com/lepl/Repository/task/TaskStatusRepository.java`](./lepl/src/main/java/com/lepl/Repository/task/TaskStatusRepository.java)
+  * [`/lepl/src/main/java/com/lepl/Repository/task/ListsRepository.java`](./lepl/src/main/java/com/lepl/Repository/task/ListsRepository.java)
+    * 일정에서 Lists 관련
+    * save, findByCurrent, findAllWithMemberTask, findByDateWithMemberTask, findOneWithMemberTask, remove 기능
+* **[`/lepl/src/main/java/com/lepl/Repository/character/CharacterRepository.java`](./lepl/src/main/java/com/lepl/Repository/character/CharacterRepository.java)**
+  * **레퍼지토리 - 캐릭터 관련**
+  * save, findOne, remove, findCharacterWithMember 기능
+  * [`/lepl/src/main/java/com/lepl/Repository/character/CharacterItemRepository.java`](./lepl/src/main/java/com/lepl/Repository/character/CharacterItemRepository.java)
+    * 캐릭터 아이템 관련
+    * save, findOne, findAll, remove, findAllWithMemberItem, updateStatus 기능
+  * [`/lepl/src/main/java/com/lepl/Repository/character/ExpRepository.java`](./lepl/src/main/java/com/lepl/Repository/character/ExpRepository.java)
+    * 경험치 관련
+    * save, findOne, remove, findOneWithMember, initPointToday 기능
+  * [`/lepl/src/main/java/com/lepl/Repository/character/FollowRepository.java`](./lepl/src/main/java/com/lepl/Repository/character/FollowRepository.java)
+    * 팔로우 관련
+    * save, findOne, findAll, findById, remove, findAllWithFollowing, findAllWithFollower 기능
+  * [`/lepl/src/main/java/com/lepl/Repository/character/ItemRepository.java`](./lepl/src/main/java/com/lepl/Repository/character/ItemRepository.java)
+    * 아이템 관련
+    * save, findOne, findAll, remove, findByName, updatePurchase 기능
+  * [`/lepl/src/main/java/com/lepl/Repository/character/NotificationRepository.java`](./lepl/src/main/java/com/lepl/Repository/character/NotificationRepository.java)
+    * 알림 관련
+    * save, findOne, findAll, remove, findAllWithCharacter 기능
+* **[`/lepl/src/main/java/com/lepl/Service/member/MemberService.java`](./lepl/src/main/java/com/lepl/Service/member/MemberService.java)**
+  * **서비스 - 회원 관련**
+  * join(중복검증 포함), findOne, findByUid, {findAllWithPage, initCacheMembers}(=회원 최신순 조회+캐시) 기능
+* **[`/lepl/src/main/java/com/lepl/Service/task/TaskServiceV2.java`](./lepl/src/main/java/com/lepl/Service/task/TaskServiceV2.java)**
+  * **서비스 - 일정 관련** -> 모니터링 추가(비지니스 로직)
+  * join, findOne, findOneWithMember, remove, update(일정수정), updateState(일정상태수정), updateAll(일정수정여러개한번에)
+  * [`/lepl/src/main/java/com/lepl/Service/task/config/TaskConfigV2.java`](./lepl/src/main/java/com/lepl/Service/task/config/TaskConfigV2.java)
+    * **모니터링(비지니스 로직) 위해 추가 설정 -> @Timed 사용 위해**
+  * [`/lepl/src/main/java/com/lepl/Service/task/TaskStatusService.java`](./lepl/src/main/java/com/lepl/Service/task/TaskStatusService.java)
+  * [`/lepl/src/main/java/com/lepl/Service/task/ListsService.java`](./lepl/src/main/java/com/lepl/Service/task/ListsService.java)
+    * 일정에서 Lists 관련
+    * findAllWithMemberTask(멤버일정모두찾기), findByDateWithMemberTask(멤버일정날짜로찾기), join, findByCurrent(현재날짜로찾기), findOneWithMemberTask, remove, updateTime(타이머종료시경험치업뎃)
+* **[`/lepl/src/main/java/com/lepl/Service/character/CharacterService.java`](./lepl/src/main/java/com/lepl/Service/character/CharacterService.java)**
+  * **서비스 - 캐릭터 관련**
+  * join, findOne, findCharacterWithMember, remove
+  * [`/lepl/src/main/java/com/lepl/Service/character/CharacterItemService.java`](./lepl/src/main/java/com/lepl/Service/character/CharacterItemService.java)
+    * **서비스 - 캐릭터 아이템 관련**
+    * join, findOne, findAll, remove, findAllWithMemberItem(사용자소유아이템전체조회), updateStatus(아이템착용여부업뎃)
+  * [`/lepl/src/main/java/com/lepl/Service/character/ExpService.java`](./lepl/src/main/java/com/lepl/Service/character/ExpService.java)
+    * **서비스 - 경험치 관련**
+    * join, findOne, findOneWithMember, remove, update, initPointToday(하루제한경험치량초기화)
+  * [`/lepl/src/main/java/com/lepl/Service/character/FollowService.java`](./lepl/src/main/java/com/lepl/Service/character/FollowService.java)
+    * **서비스 - 팔로우 관련**
+    * join, validateDuplicateFollow(중복검증), findOne, findAll, remove, findAllWithFollowing(팔로잉조회), findAllWithFollower(팔로워조회)
+  * [`/lepl/src/main/java/com/lepl/Service/character/ItemService.java`](./lepl/src/main/java/com/lepl/Service/character/ItemService.java)
+    * **서비스 - 아이템 관련**
+    * save, findOne, findAll, remove, findByName, updatePurchase(상품구매량=재고수)
+  * [`/lepl/src/main/java/com/lepl/Service/character/NotificationService.java`](./lepl/src/main/java/com/lepl/Service/character/NotificationService.java)
+    * **서비스 - 알림 관련**
+    * join, findOne, findAll, remove, findAllWithCharacter
 
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/cb3ef086-fbb6-42bc-bf60-d346905a5fb5)
+- **[`/lepl/src/main/java/com/lepl/util/ApiControllerAdvice.java`](./lepl/src/main/java/com/lepl/util/ApiControllerAdvice.java)**
+  * **Util - 컨트롤러 예외(Exception)처리 관련**
+  * **[`/lepl/src/main/java/com/lepl/util/ApiResponse.java`](./lepl/src/main/java/com/lepl/util/ApiResponse.java)**
+    * **Util - API 응답 양식 지정**
+    * 컨트롤러에서 Valid 사용 + 제네릭(타입문제 해결) 목적
+  * **[`/lepl/src/main/java/com/lepl/util/ErrorResult.java`](./lepl/src/main/java/com/lepl/util/ErrorResult.java)**
+    * **Util - API 예외처리 응답 양식 관련**
+    * 말 그대로 예외(Exception)처리 관련
+  * **[`/lepl/src/main/java/com/lepl/util/Messages.java`](./lepl/src/main/java/com/lepl/util/Messages.java)**
+    * **Util - 메시지 관련**
+    * 메시지 국제화 관리하게 messages.properties 를 활용하면 되긴 하지만 그냥 이걸로 끝냈다.
 
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/d405819e-5684-4def-a647-e8759e04b958)
-
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/b869af6d-4c9b-4a9b-a8d8-5ceae6f38fbd)
-
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/c16f7956-a82d-478b-8534-907c959e6466)
-
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/947a0afc-2439-4306-a092-fcb32dab8bc1)
-
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/3bedda7f-726b-42e0-8cf6-9034f5aa93a8)
-
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/a21cfbc8-5bd8-405d-a174-aa90ecf26370)
-
-![image](https://github.com/LvUpPlanner/LePl_Spring/assets/105353163/29233293-2436-427c-a1f6-1b2be636320c)
->>>>>>> main
