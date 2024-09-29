@@ -73,7 +73,7 @@ class MemberApiControllerTest {
                                 .content(content)
                 )
                 .andExpect(status().isCreated()) // 예상 응답
-                .andExpect(jsonPath("uid").value("12345")) // 응답 body 의 json 확인
+                .andExpect(jsonPath("$.data.uid").value("12345")) // 응답 body 의 json 확인
                 .andDo(print());
 
         // then
