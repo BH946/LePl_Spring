@@ -9,17 +9,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor // 생성자 주입 + 엔티티 매니저
 public class TaskStatusRepository {
-    private final EntityManager em;
 
-    /**
-     * save, findOne
-     */
-    public void save(TaskStatus taskStatus) {
-        if (taskStatus.getId() == null) {
-            em.persist(taskStatus);
-        }
+  private final EntityManager em;
+
+  /**
+   * save, findOne
+   */
+  public void save(TaskStatus taskStatus) {
+    if (taskStatus.getId() == null) {
+      em.persist(taskStatus);
     }
-    public TaskStatus findOne(Long id) {
-        return em.find(TaskStatus.class, id);
-    }
+  }
+
+  public TaskStatus findOne(Long id) {
+    return em.find(TaskStatus.class, id);
+  }
 }

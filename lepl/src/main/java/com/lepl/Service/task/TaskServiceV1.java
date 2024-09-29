@@ -3,6 +3,7 @@ package com.lepl.Service.task;
 import com.lepl.Repository.task.TaskRepository;
 import com.lepl.domain.task.Task;
 import com.lepl.domain.task.TaskStatus;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,4 +64,8 @@ public class TaskServiceV1 implements TaskService {
         TaskStatus taskStatus = task.getTaskStatus().update(completedStatus, timerOnOff);
         task.updateTaskStatus(taskStatus, remainTime);
     }
+
+    @Override
+    @Transactional
+    public void updateAll(List<Task> taskList, String content, LocalDateTime startTime, LocalDateTime endTime){}
 }

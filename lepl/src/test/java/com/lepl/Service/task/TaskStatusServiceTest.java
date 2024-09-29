@@ -9,30 +9,30 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 
-
 @SpringBootTest
 @Transactional // 쓰기모드 -> 서비스코드에 트랜잭션 유무 반드시 확인
 @Slf4j
 public class TaskStatusServiceTest {
-    @Autowired
-    TaskStatusService taskStatusService;
 
-    /**
-     * join, findOne
-     */
+  @Autowired
+  TaskStatusService taskStatusService;
 
-    @Test
-    public void 일정상태_저장과조회() throws Exception {
-        // given
-        TaskStatus taskStatus = TaskStatus.createTaskStatus(false, false);
+  /**
+   * join, findOne
+   */
 
-        // when
-        taskStatusService.join(taskStatus);
-        TaskStatus findTaskStatus = taskStatusService.findOne(taskStatus.getId());
+  @Test
+  public void 일정상태_저장과조회() throws Exception {
+    // given
+    TaskStatus taskStatus = TaskStatus.createTaskStatus(false, false);
 
-        // then
-        Assertions.assertEquals(taskStatus.getId(), findTaskStatus.getId());
-        Assertions.assertEquals(findTaskStatus.getTimerOnOff(), false);
-        Assertions.assertEquals(findTaskStatus.getCompletedStatus(), false);
-    }
+    // when
+    taskStatusService.join(taskStatus);
+    TaskStatus findTaskStatus = taskStatusService.findOne(taskStatus.getId());
+
+    // then
+    Assertions.assertEquals(taskStatus.getId(), findTaskStatus.getId());
+    Assertions.assertEquals(findTaskStatus.getTimerOnOff(), false);
+    Assertions.assertEquals(findTaskStatus.getCompletedStatus(), false);
+  }
 }

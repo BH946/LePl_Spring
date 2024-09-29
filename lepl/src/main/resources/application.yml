@@ -4,11 +4,15 @@ spring:
     username: sa
     password:
       driver-class-name: org.h2.Driver
+#    url: jdbc:oracle:thin:@localhost:1521:STR
+#    username: testUser
+#    password: 1234
+#    driver-class-name: oracle.jdbc.OracleDriver
 
   jpa:
     hibernate:
-      ddl-auto: create # table 자동 생성
-#      ddl-auto: none # db 초기화 없앰
+#      ddl-auto: create # table 자동 생성
+      ddl-auto: none # db 초기화 없앰
     properties:
       hibernate:
 #        show_sql: true
