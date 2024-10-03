@@ -34,7 +34,7 @@ public class TaskRepository {
 
   public Task findOneWithMember(Long memberId, Long taskId) {
     List<Task> tasks = em.createQuery(
-            "select distinct t from Task t" +
+              "select t from Task t" +
                 " join fetch t.lists l" +
                 " where t.id = :taskId and" +
                 " l.member.id = :memberId", Task.class)
