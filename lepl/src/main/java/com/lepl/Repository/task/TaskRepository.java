@@ -68,6 +68,7 @@ public class TaskRepository {
         .executeUpdate();
 
     System.out.println("Updated count: " + updatedCount); // 업데이트된 개수 확인
+    em.clear(); //이거 필수! 까먹었었네
   }
 
 }
