@@ -1,5 +1,6 @@
 package com.lepl.Service.member;
 
+import com.lepl.Service.member.v2.MemberService;
 import com.lepl.api.member.dto.FindMemberResponseDto;
 import com.lepl.domain.character.Character;
 import com.lepl.domain.character.Exp;
@@ -96,5 +97,18 @@ public class MemberServiceTest {
       log.info("member.id : {}", m.getId());
       log.info("member.nickName : {}", m.getNickname());
     }
+  }
+
+  @Test
+  @Order(4)
+  public void QueryDSL테스트() throws Exception {
+    //given
+    List<Member> members;
+
+    //when
+    members = memberService.findAllByNickname("테스트 닉네임");
+
+    //then
+    Assertions.assertEquals(members.get(0).getNickname(), "테스트 닉네임");
   }
 }

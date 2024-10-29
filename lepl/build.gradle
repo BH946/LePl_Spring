@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+	// data-jpa(jpa, spring data jpa), web(http), lombok, db(h2, oracle)
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
@@ -26,26 +27,37 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc10
 	implementation group: 'com.oracle.database.jdbc', name: 'ojdbc10', version: '19.21.0.0'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// test lombok 사용
+	// test(JUnit, AsserJ 등), lombok 을 test 에서 사용
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
-	//valid, NotEmpty 사용위해 추가
+	//valid(NotEmpty 등) 사용위해 추가
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 
-	// 캐시
+	// 캐시(caffeine 로 캐시매니저 간단 등록)
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.1'
 
-	// actuator, prometheus
+	// 모니터링(actuator, prometheus)
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
+
+	//QueryDSL
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+//Querydsl 추가, 자동 생성된 Q클래스 gradle clean으로 제거
+clean {
+	delete file('src/main/generated')
 }

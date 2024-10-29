@@ -1,4 +1,4 @@
-package com.lepl.Repository.member;
+package com.lepl.Repository.member.v2;
 
 import com.lepl.api.member.dto.FindMemberResponseDto;
 import com.lepl.domain.member.Member;
@@ -8,40 +8,31 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-
 /**
- * Spring Data Jpa + 일반 JPA 혼합 테스트 위해
- * MemberRepositoryCustom 구현 + save() 주석 
+ * MemberRepository 구현체 -> SpringDataJpa 여기서 추가 사용!! (레포지토리 단)
  */
-
 @Repository
 @RequiredArgsConstructor // 생성자 주입 + 엔티티매니저 주입 제공
-public class MemberRepositorya implements MemberRepositoryCustom {
-
+public class JpaMemberRepository implements MemberRepository {
+  private final SpringDataJpaMemberRepository repository;
   private final EntityManager em;
 
-  /**
-   * save, findOne, findByUid, findAllWithPage
-   */
+  @Override
+  public void save(Member member) {
+    repository.save(member);
+  }
 
-//  public void save(Member member) {
-//    if (member.getId() == null) {
-//      em.persist(member); // db 저장
-//    }
-//  }
-
+  @Override
   public Member findOne(Long id) {
-    return em.find(Member.class, id);
+    return repository.findById(id).orElse(null); //orElse() 안하면 Optional<T> 반환
   }
 
+  @Override
   public Member findByUid(String uid) {
-    List<Member> findMembers = em.createQuery("select m from Member m where m.uid = :uid",
-            Member.class)
-        .setParameter("uid", uid)
-        .getResultList(); // List로 반환 받아야 null처리가 쉬움
-    return findMembers.isEmpty() ? null : findMembers.get(0);
+    return repository.findByUid(uid);
   }
 
+  @Override
   public List<FindMemberResponseDto> findAllWithPage(int pageId) {
     int offset = (pageId - 1) * 10;
     int limit = 10;

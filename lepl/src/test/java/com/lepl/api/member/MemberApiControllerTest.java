@@ -2,16 +2,12 @@ package com.lepl.api.member;
 
 import com.lepl.Service.character.CharacterService;
 import com.lepl.Service.character.ExpService;
-import com.lepl.Service.member.MemberService;
+import com.lepl.Service.member.v2.MemberService;
 import com.lepl.api.member.dto.FindMemberResponseDto;
-import com.lepl.domain.character.Character;
-import com.lepl.domain.character.Exp;
 import com.lepl.domain.member.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
@@ -28,7 +24,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -139,7 +134,6 @@ class MemberApiControllerTest {
                                 .accept(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 )
-//                .andExpect(status().isOk()) // 로그아웃 성공
                 .andExpect(status().isConflict()); // 로그아웃 중복
 
         // then

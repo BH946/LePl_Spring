@@ -1,6 +1,9 @@
 package com.lepl.Repository.member;
 
 
+//import com.lepl.Repository.member.v1.MemberRepository;
+import com.lepl.Repository.member.v2.MemberRepository;
+import com.lepl.Repository.member.v3.MemberQueryRepository;
 import com.lepl.api.member.dto.FindMemberResponseDto;
 import com.lepl.domain.character.Character;
 import com.lepl.domain.character.Exp;
@@ -26,6 +29,8 @@ class MemberRepositoryTest {
 
   @Autowired
   MemberRepository memberRepository;
+  @Autowired
+  MemberQueryRepository queryRepository;
   @Autowired
   EntityManager em;
 
@@ -96,5 +101,19 @@ class MemberRepositoryTest {
       log.info("member id : {}, nickname : {}", dto.getId(), dto.getNickname());
     }
     Assertions.assertEquals(memberList.get(0).getNickname(), "test1");
+  }
+
+  @Test
+  @Order(4)
+  @Transactional
+  public void QueryDSL테스트() throws Exception {
+    //given
+    List<Member> members;
+
+    //when
+    members = queryRepository.findAllByNickname("test1");
+
+    //then
+    Assertions.assertEquals(members.get(0).getNickname(), "test1");
   }
 }

@@ -9,7 +9,7 @@ import static com.lepl.util.Messages.VALID_LOGOUT;
 
 import com.lepl.Service.character.CharacterService;
 import com.lepl.Service.character.ExpService;
-import com.lepl.Service.member.MemberService;
+import com.lepl.Service.member.v2.MemberService;
 import com.lepl.api.argumentresolver.Login;
 import com.lepl.api.member.dto.FindMemberResponseDto;
 import com.lepl.domain.character.Character;

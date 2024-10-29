@@ -9,7 +9,7 @@ import static com.lepl.util.Messages.UNAUTHORIZED_FOLLOW_CANCEL;
 import com.lepl.Service.character.CharacterService;
 import com.lepl.Service.character.FollowService;
 import com.lepl.Service.character.NotificationService;
-import com.lepl.Service.member.MemberService;
+import com.lepl.Service.member.v2.MemberService;
 import com.lepl.api.argumentresolver.Login;
 import com.lepl.domain.character.Character;
 import com.lepl.domain.character.Follow;

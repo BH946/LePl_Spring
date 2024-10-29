@@ -5,7 +5,7 @@ import static com.lepl.util.Messages.SUCCESS_TASK_DELETE;
 import static com.lepl.util.Messages.SUCCESS_TASK_UPDATE;
 import static com.lepl.util.Messages.VALID_TASK;
 
-import com.lepl.Service.member.MemberService;
+import com.lepl.Service.member.v2.MemberService;
 import com.lepl.Service.task.ListsService;
 import com.lepl.Service.task.TaskService;
 import com.lepl.Service.task.TaskStatusService;

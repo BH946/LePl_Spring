@@ -1,23 +1,20 @@
-package com.lepl.Service.member;
+package com.lepl.Service.member.v1;
 
-import com.lepl.Repository.member.MemberRepository;
+//import com.lepl.Repository.member.v1.MemberRepository;
+import com.lepl.Repository.member.v2.MemberRepository;
 import com.lepl.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.lepl.api.member.dto.FindMemberResponseDto;
-import com.lepl.domain.member.Member;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional(readOnly = true) // 읽기 모드로 기본으로 사용
+//@Service
+//@Transactional(readOnly = true) // 읽기 모드로 기본으로 사용
 @RequiredArgsConstructor // 생성자 주입 방식 사용
 public class MemberService {
     private final MemberRepository memberRepository;

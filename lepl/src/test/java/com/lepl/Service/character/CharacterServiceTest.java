@@ -1,6 +1,6 @@
 package com.lepl.Service.character;
 
-import com.lepl.Service.member.MemberService;
+import com.lepl.Service.member.v2.MemberService;
 import com.lepl.domain.character.Character;
 import com.lepl.domain.character.Exp;
 import com.lepl.domain.member.Member;

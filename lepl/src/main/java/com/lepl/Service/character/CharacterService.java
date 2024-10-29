@@ -1,7 +1,8 @@
 package com.lepl.Service.character;
 
 import com.lepl.Repository.character.CharacterRepository;
-import com.lepl.Repository.member.MemberRepository;
+//import com.lepl.Repository.member.v1.MemberRepository;
+import com.lepl.Repository.member.v2.MemberRepository;
 import com.lepl.domain.character.Character;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;

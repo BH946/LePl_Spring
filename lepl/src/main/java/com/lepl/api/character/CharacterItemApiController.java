@@ -3,7 +3,7 @@ package com.lepl.api.character;
 import com.lepl.Service.character.CharacterItemService;
 import com.lepl.Service.character.CharacterService;
 import com.lepl.Service.character.ItemService;
-import com.lepl.Service.member.MemberService;
+import com.lepl.Service.member.v2.MemberService;
 import com.lepl.api.argumentresolver.Login;
 import com.lepl.domain.character.Character;
 import com.lepl.domain.character.CharacterItem;
