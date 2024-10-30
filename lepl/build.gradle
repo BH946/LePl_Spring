@@ -53,9 +53,9 @@ dependencies {
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
 	//Spring Security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation "org.springframework.security:spring-security-web"
-	implementation "org.springframework.security:spring-security-config"
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation "org.springframework.security:spring-security-web"
+//	implementation "org.springframework.security:spring-security-config"
 }
 
 tasks.named('test') {
