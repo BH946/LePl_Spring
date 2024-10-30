@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TimeTraceAop {
 
-  @Around("execution(* com.lepl..*(..))")
+  @Around("execution(* com.lepl..*(..)) && !within(com.lepl.security..*)")
   public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
     // 프록시 실행
     long start = System.currentTimeMillis();

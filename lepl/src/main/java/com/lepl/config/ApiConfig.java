@@ -13,6 +13,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Spring Security 쓸거면??
+ * 1. build.gradle 에 주석해제해서 라이브러리 다운
+ * 2. ApiConfigV1.java 의 argumentresolver, interceptor 메소드 주석!!
+ * 3. security 패키지 파일 주석 전부 해제 (개노가다;;)
+ */
 @Configuration // 설정 파일임을 알림
 @Slf4j
 public class ApiConfig implements WebMvcConfigurer {

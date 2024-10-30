@@ -4,6 +4,7 @@ import com.lepl.Service.task.ListsService;
 import com.lepl.api.argumentresolver.Login;
 import com.lepl.domain.task.Lists;
 import com.lepl.domain.task.Task;
+import com.lepl.security.MemberDetail;
 import com.lepl.util.ApiResponse;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,6 +80,20 @@ public class ListsApiController {
         .collect(Collectors.toList());
     return ResponseEntity.status(HttpStatus.OK).body(result);
   }
+  //아래 주석은 Spring Security 사용하여 @Login 대신 memberId를 가져온 코드
+//  @GetMapping(value = "/member/all")
+//  public ResponseEntity<List<ListsResDto>> findAllWithMemberTask(@AuthenticationPrincipal
+//      MemberDetail memberDetail) {
+//    Long memberId = memberDetail.getMember().getId();
+//    List<Lists> listsList = listsService.findAllWithMemberTask(memberId);
+//    if (listsList.isEmpty()) {
+//      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+//    }
+//    List<ListsResDto> result = listsList.stream()
+//        .map(o -> new ListsResDto(o))
+//        .collect(Collectors.toList());
+//    return ResponseEntity.status(HttpStatus.OK).body(result);
+//  }
 
   /**
    * 일정 조회(4) - 날짜범위로 Lists(=하루단위 일정모음) 조회 -> 해당 회원꺼만 하루, 한달, 1년 등등 원하는 날짜 범위만큼 사용 가능
